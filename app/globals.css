@@ -24,3 +24,10 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* ant input style start */
+.ant-input:focus{
+    border: none !important;
+    box-shadow: none !important;
+}
+/* antd input style end */
