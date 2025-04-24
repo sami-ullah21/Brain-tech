@@ -1,65 +1,26 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import ShippingHero from "../shipping-hero";
-import GlobalRulesets from "../global-rulesets";
-import AddRulesetModal from "@/add-ruleset-modal";
+import RuleEditor from "../components/rule-editor"
 
-export default function Page() {
-  const [currentPage, setCurrentPage] = useState<"hero" | "rulesets" | "modal">(
-    "hero"
-  );
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+export default function Home() {
+  const sampleRuleset = {
+    name: "Default Ruleset",
+    rules: [
+      {
+        id: "rule-1",
+        name: "Sample Rule",
+        conditions: [],
+        action: "Make Shipping Free",
+        overrideShipping: "No",
+        afterMatch: "Stop Processing Global Rules",
+      },
+    ],
+  }
 
-  return (
-    <div>
-      <div className="bg-gray-800 p-4">
-        <div className="max-w-6xl mx-auto flex space-x-4">
-          <button
-            className={`px-4 py-2 rounded ${
-              currentPage === "hero"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-gray-300"
-            }`}
-            onClick={() => setCurrentPage("hero")}
-          >
-            Shipping Hero
-          </button>
-          <button
-            className={`px-4 py-2 rounded ${
-              currentPage === "rulesets"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-gray-300"
-            }`}
-            onClick={() => setCurrentPage("rulesets")}
-          >
-            Global Rulesets
-          </button>
+  const handleSave = (ruleset: any) => {
+    console.log("Saving ruleset:", ruleset)
+    // Here you would typically send this data to your backend
+  }
 
-          <button
-            className={`px-4 py-2 rounded ${
-              currentPage === "modal"
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-gray-300"
-            }`}
-            onClick={() => {
-              setCurrentPage("modal");
-              setIsModalOpen(true);
-            }}
-          >
-            Show Modal
-          </button>
-        </div>
-      </div>
-
-      {currentPage === "hero" ? <ShippingHero /> : <GlobalRulesets />}
-      <AddRulesetModal
-        open={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAdd={() => {
-          //
-        }}
-      />
-    </div>
-  );
+  return <RuleEditor ruleset={sampleRuleset} onSave={handleSave} />
 }
